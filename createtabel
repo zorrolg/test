@@ -1,0 +1,158 @@
+/*
+Navicat PGSQL Data Transfer
+
+Source Server         : 52直连
+Source Server Version : 90224
+Source Host           : 10.185.235.52:15007
+Source Database       : mytest
+Source Schema         : public
+
+Target Server Type    : PGSQL
+Target Server Version : 90224
+File Encoding         : 65001
+
+Date: 2018-11-08 20:46:59
+*/
+
+
+-- ----------------------------
+-- Table structure for department
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."department";
+CREATE TABLE "public"."department" (
+"did" varchar(5) COLLATE "default" NOT NULL,
+"dname" varchar(20) COLLATE "default" NOT NULL
+)
+WITH (OIDS=FALSE)
+
+;
+
+-- ----------------------------
+-- Records of department
+-- ----------------------------
+INSERT INTO "public"."department" VALUES ('1', 'HRG');
+INSERT INTO "public"."department" VALUES ('2', 'IT');
+INSERT INTO "public"."department" VALUES ('3', 'CXO');
+INSERT INTO "public"."department" VALUES ('4', 'BUILD');
+INSERT INTO "public"."department" VALUES ('5', 'MAINTANCE');
+
+-- ----------------------------
+-- Table structure for employee
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."employee";
+CREATE TABLE "public"."employee" (
+"eid" varchar(10) COLLATE "default" NOT NULL,
+"ename" varchar(20) COLLATE "default" NOT NULL
+)
+WITH (OIDS=FALSE)
+
+;
+
+-- ----------------------------
+-- Records of employee
+-- ----------------------------
+INSERT INTO "public"."employee" VALUES ('1', 'andy');
+INSERT INTO "public"."employee" VALUES ('10', 'Bat');
+INSERT INTO "public"."employee" VALUES ('2', 'andrew');
+INSERT INTO "public"."employee" VALUES ('3', 'angel');
+INSERT INTO "public"."employee" VALUES ('4', 'Aaron ');
+INSERT INTO "public"."employee" VALUES ('5', 'Abba ');
+INSERT INTO "public"."employee" VALUES ('6', 'Abbe ');
+INSERT INTO "public"."employee" VALUES ('7', 'Abby ');
+INSERT INTO "public"."employee" VALUES ('8', 'Bash');
+INSERT INTO "public"."employee" VALUES ('9', 'Book');
+
+-- ----------------------------
+-- Table structure for payroll
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."payroll";
+CREATE TABLE "public"."payroll" (
+"checknumber" varchar(30) COLLATE "default" NOT NULL,
+"emp" varchar(10) COLLATE "default" NOT NULL,
+"year" char(4) COLLATE "default" NOT NULL,
+"amount" numeric NOT NULL
+)
+WITH (OIDS=FALSE)
+
+;
+
+-- ----------------------------
+-- Records of payroll
+-- ----------------------------
+INSERT INTO "public"."payroll" VALUES ('emp1-2014', '1', '2014', '1000');
+INSERT INTO "public"."payroll" VALUES ('emp1-2015', '1', '2015', '1200');
+INSERT INTO "public"."payroll" VALUES ('emp1-2016', '1', '2016', '1500');
+INSERT INTO "public"."payroll" VALUES ('emp2-2013', '2', '2013', '500');
+INSERT INTO "public"."payroll" VALUES ('emp2-2015', '2', '2015', '800');
+INSERT INTO "public"."payroll" VALUES ('emp2-2016', '2', '2016', '1400');
+INSERT INTO "public"."payroll" VALUES ('emp5-2013', '5', '2013', '800');
+INSERT INTO "public"."payroll" VALUES ('emp5-2014', '5', '2014', '1000');
+INSERT INTO "public"."payroll" VALUES ('emp5-2015', '5', '2015', '1300');
+INSERT INTO "public"."payroll" VALUES ('emp5-2016', '5', '2016', '1500');
+INSERT INTO "public"."payroll" VALUES ('emp7-2016', '7', '2016', '1600');
+
+-- ----------------------------
+-- Table structure for worksin
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."worksin";
+CREATE TABLE "public"."worksin" (
+"emp" varchar(10) COLLATE "default" NOT NULL,
+"dept" varchar(5) COLLATE "default" NOT NULL
+)
+WITH (OIDS=FALSE)
+
+;
+
+-- ----------------------------
+-- Records of worksin
+-- ----------------------------
+INSERT INTO "public"."worksin" VALUES ('1', '2');
+INSERT INTO "public"."worksin" VALUES ('10', '3');
+INSERT INTO "public"."worksin" VALUES ('2', '1');
+INSERT INTO "public"."worksin" VALUES ('3', '3');
+INSERT INTO "public"."worksin" VALUES ('4', '2');
+INSERT INTO "public"."worksin" VALUES ('5', '4');
+INSERT INTO "public"."worksin" VALUES ('6', '5');
+INSERT INTO "public"."worksin" VALUES ('7', '5');
+INSERT INTO "public"."worksin" VALUES ('8', '2');
+INSERT INTO "public"."worksin" VALUES ('9', '2');
+
+-- ----------------------------
+-- Alter Sequences Owned By 
+-- ----------------------------
+
+-- ----------------------------
+-- Uniques structure for table department
+-- ----------------------------
+ALTER TABLE "public"."department" ADD UNIQUE ("dname");
+
+-- ----------------------------
+-- Primary Key structure for table department
+-- ----------------------------
+ALTER TABLE "public"."department" ADD PRIMARY KEY ("did");
+
+-- ----------------------------
+-- Primary Key structure for table employee
+-- ----------------------------
+ALTER TABLE "public"."employee" ADD PRIMARY KEY ("eid");
+
+-- ----------------------------
+-- Primary Key structure for table payroll
+-- ----------------------------
+ALTER TABLE "public"."payroll" ADD PRIMARY KEY ("checknumber");
+
+-- ----------------------------
+-- Primary Key structure for table worksin
+-- ----------------------------
+ALTER TABLE "public"."worksin" ADD PRIMARY KEY ("emp", "dept");
+
+-- ----------------------------
+-- Foreign Key structure for table "public"."payroll"
+-- ----------------------------
+ALTER TABLE "public"."payroll" ADD FOREIGN KEY ("emp") REFERENCES "public"."employee" ("eid") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- ----------------------------
+-- Foreign Key structure for table "public"."worksin"
+-- ----------------------------
+ALTER TABLE "public"."worksin" ADD FOREIGN KEY ("dept") REFERENCES "public"."department" ("did") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."worksin" ADD FOREIGN KEY ("emp") REFERENCES "public"."employee" ("eid") ON DELETE NO ACTION ON UPDATE NO ACTION;
